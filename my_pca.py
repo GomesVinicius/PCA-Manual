@@ -26,11 +26,16 @@ class MyPCA:
         self.eigenvalues = eigenvalues[idx]
         print('2-\n AutoValores: \n', self.eigenvalues, '\nAutoVetores:\n ', eigenvectors)
 
-        # print('------------------------------------------------------->>',idx)
+        print('------------------------------------------------------->>',idx[0])
+        print('Meu autovetor da posição do meu maior autovalor:', idx, ' - ', eigenvectors[:, idx[0]])
+        print('###')
+        print(np.array(eigenvectors[:, idx[0]]))
+        print(np.array(eigenvectors[:, idx[0]]).reshape(-1, 1))
+        print('###')
 
         # idx_vectors = np.argsort(eigenvectors)[::-1]
         # eigenvectors = eigenvectors[idx_vectors]
-        eigenvectors = eigenvectors[:, :self.n_components]
+        eigenvectors = eigenvectors[:, idx[0:1]]
 
         # print('3.5-', eigenvectors)
         # eigenvectors = eigenvectors[:, -1]
@@ -39,21 +44,21 @@ class MyPCA:
 
         self.components = eigenvectors.T
 
-        print('\n', self.components, '\n')
+        # print('\n', self.components, '\n')
 
     def transform(self, X):
-        print('\n------------ Transform ------------\n')
-        print('\n X orig: \n', X)
+        # print('\n------------ Transform ------------\n')
+        # print('\n X orig: \n', X)
 
         X = X - self.mean
 
-        print('\n X alter: \n', X)
+        # print('\n X alter: \n', X)
 
-        print('\n------------ Cálculo Final ------------\n')
-        print(X)
-        print(self.components.T)
+        # print('\n------------ Cálculo Final ------------\n')
+        # print(X)
+        # print(self.components.T)
 
-        print('\n Retorno: \n', np.dot(X, self.components.T))
+        # print('\n Retorno: \n', np.dot(X, self.components.T))
 
         return np.dot(X, self.components.T)
 
@@ -103,7 +108,7 @@ class MyPCA:
 
             log_likelihoods.append(total_ll)
             self.log_likelihood = log_likelihoods
-            
+
         return np.argmax(log_likelihoods) + 1
 
     def plot_profile_likelihood(self):
